@@ -1,11 +1,18 @@
 package umc.spring.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import umc.spring.domain.Qna;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface QnaRepository extends JpaRepository<Qna, Long> {
-    Optional<List<Qna>> findAllByMemberId(Long memberId);
+    @Query("SELECT q.id FROM Qna q WHERE q.member.id = :memberId")
+    List<Long> findAllQnaIdsByMemberId(@Param("memberId") Long memberId);
+
+    @Modifying
+    @Query("DELETE FROM Qna q WHERE q.id IN :qnaIds")
+    void deleteAllQnaByQnaIds(@Param("qnaIds") List<Long> qnaIds);
 }

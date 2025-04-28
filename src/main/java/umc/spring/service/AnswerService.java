@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.repository.AnswerRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AnswerService {
@@ -12,8 +14,8 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
 
     @Transactional
-    public void deleteAnswerByReview(Long reviewId) {
+    public void deleteAnswerByReview(List<Long> reviewIds) {
 
-        answerRepository.deleteAllByReviewId(reviewId);
+        answerRepository.deleteAllByReviewIds(reviewIds);
     }
 }

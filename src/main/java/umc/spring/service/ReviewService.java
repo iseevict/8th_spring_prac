@@ -22,15 +22,10 @@ public class ReviewService {
     @Transactional
     public void deleteReviewByMember(Long memberId) {
 
-        List<Review> reviewList = reviewRepository.findAllByMemberId(memberId)
-                .orElse(new ArrayList<>());
+        List<Long> reviewIdList = reviewRepository.findAllReviewIdsByMemberId(memberId);
 
-        for (Review review : reviewList) {
-
-            answerService.deleteAnswerByReview(review.getId());
-            reviewImgRepository.deleteAllByReviewId(review.getId());
-        }
-
-        reviewRepository.deleteAll(reviewList);
+        answerService.deleteAnswerByReview(reviewIdList);
+        reviewImgRepository.deleteAllByReviewIds(reviewIdList);
+        reviewRepository.deleteAllByReviewIds(reviewIdList);
     }
 }

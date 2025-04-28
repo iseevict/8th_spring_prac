@@ -1,8 +1,15 @@
 package umc.spring.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import umc.spring.domain.QnaImg;
 
+import java.util.List;
+
 public interface QnaImgRepository extends JpaRepository<QnaImg, Long> {
-    void deleteAllByQnaId(Long qnaId);
+    @Modifying
+    @Query("DELETE FROM QnaImg qi WHERE qi.qna.id IN :qnaIds")
+    void deleteAllByQnaIds(@Param("qnaIds") List<Long> qnaIds);
 }
