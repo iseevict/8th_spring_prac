@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.enums.Gender;
 import umc.spring.domain.enums.LoginType;
@@ -49,4 +50,8 @@ public class Member extends BaseEntity {
 
     private LocalDateTime inactiveAt;
 
+    public void updateStatus() {
+
+        this.status = !this.status;
+    }
 }
